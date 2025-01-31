@@ -1,20 +1,20 @@
 #include <vector>
 
-#ifndef BOARD
-#define BOARD
+#ifndef NODE
+#define NODE
 
-class Board {
+class Node {
     private:
         int cost;
         std::vector<std::vector<int>> board;
     public:
         // get board
-        Board() { cost = 0; }
-        Board(std::vector<std::vector<int>> board) {
+        Node() { cost = 0; }
+        Node(std::vector<std::vector<int>> board) {
             this->board = board;
             cost = 0;
         }
-        Board(std::vector<std::vector<int>> board, int cost) {
+        Node(std::vector<std::vector<int>> board, int cost) {
             this->board = board;
             this->cost = cost;
         }
