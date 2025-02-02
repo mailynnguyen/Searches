@@ -9,7 +9,7 @@ class Node:
     def boardToTuple(self): # converts the board prop to a tuple
         return tuple(tuple(row) for row in self.board)
 
-    def __lt__(self, other): # function to be able to compare two nodes
+    def __lt__(self, other): # function to be able to compare two nodes, to push into heap
         return self.cost < other.cost
 
 def main():
@@ -24,9 +24,55 @@ def main():
     depth20 = [[7,1,2], [4,8,5], [6,3,0]]
     depth24 = [[0,7,2], [4,6,1], [3,5,8]]
 
-    val = input("Enter which board depth: ")
+    val = int(input("Enter which board (1-8) or nothing to enter your own board: "))
 
-    uniform_cost_search(depth12, goal_board)
+    if val == 1:
+        board_input = depth0
+        print("solution should be at depth 0.")
+        print("---------------------------")
+    elif val == 2:
+        board_input = depth2
+        print("solution should be at depth 2.")
+        print("---------------------------")
+    elif val == 3:
+        board_input = depth4
+        print("solution should be at depth 4.")
+        print("---------------------------")
+    elif val == 4:
+        board_input = depth8
+        print("solution should be at depth 8.")
+        print("---------------------------")
+    elif val == 5:
+        board_input = depth12
+        print("solution should be at depth 12.")
+        print("---------------------------")
+    elif val == 6:
+        board_input = depth16
+        print("solution should be at depth 16.")
+        print("---------------------------")
+    elif val == 7:
+        board_input = depth20
+        print("solution should be at depth 20.")
+        print("---------------------------")
+    elif val == 8:
+        board_input = depth24
+        print("solution should be at depth 24.")
+        print("---------------------------")
+    else:
+        board_input = []
+        digits_used = []
+        print("Enter digits 0-9: ")
+        for i in range(3):
+            row = []
+            for j in range(3):
+                x = int(input())
+                while (x in digits_used):
+                    x = int(input("Digit already used, enter another: "))
+                row.append(x)
+                digits_used.x
+            input.append(row)  
+            
+    uniform_cost_search(board_input, goal_board)
 
 
 
@@ -36,7 +82,7 @@ def uniform_cost_search(board, goal_state):
     curr = Node(0, board)
     heapq.heappush(queue, curr)
 
-    repeated_states = { curr.boardToTuple() : 0 }
+    visited = { curr.boardToTuple() : 0 }
 
 
     while(True):
@@ -54,11 +100,11 @@ def uniform_cost_search(board, goal_state):
             return
 
         # else, expand the curr node
-        expand_node(curr, queue, repeated_states)
+        expand_node(curr, queue, visited)
 
 
 
-def expand_node(curr_node, queue, repeated_states):
+def expand_node(curr_node, queue, visited):
     
     curr_board = curr_node.board
 
@@ -70,8 +116,6 @@ def expand_node(curr_node, queue, repeated_states):
 
                 for d in directions:
                     if 0 <= i + d[0] <= 2 and 0 <= j + d[1] <= 2:
-                        print("i: ", i + d[0])
-                        print("j: ", j + d[1])
                         # swap
                         child_board = copy.deepcopy(curr_board)
                         
@@ -85,16 +129,9 @@ def expand_node(curr_node, queue, repeated_states):
                         child_board_tuple = child_node.boardToTuple()
 
                         # check if node, with new board, exists in queue already
-                        if child_board_tuple not in repeated_states:
-                            repeated_states[child_board_tuple] = curr_node.cost + 1 # add to repeated states
-                            print("curr_board:")
-                            for row in curr_board:
-                                print(row)
-                            print("child_board:")
-                            for row in child_board:
-                                print(row)
-                            print()
+                        if child_board_tuple not in visited:
+                            visited[child_board_tuple] = curr_node.cost + 1 # add to repeated states
                             heapq.heappush(queue, child_node) # add to the queue
-                        
+
 
 main()
