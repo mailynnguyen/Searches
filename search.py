@@ -81,8 +81,8 @@ def main():
                     while (x in digits_used):
                         x = int(input("Digit already used, enter another: "))
                     row.append(x)
-                    digits_used.x
-                input.append(row)  
+                    digits_used.append(x)
+                board_input.append(row)  
                 
         # 1 = uniform cost search
         # 2 = a* misplaced tile
