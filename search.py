@@ -28,49 +28,39 @@ def main():
     depth24 = [[0,7,2], [4,6,1], [3,5,8]]
 
     while True:
-        val = int(input("Enter which board (1-8) or nothing to enter your own board: "))
+        print("----------------------------")
+        val = int(input("Enter which board (1-8) or (9) to enter your own board: "))
+        print("----------------------------")
+
+        print()
+        print("----------------")
 
         if val == 1:
             board_input = depth0
-            print("---------------------------")
-            print("solution should be at depth 0.")
-            print()
+            print("BOARD - DEPTH 0")
         elif val == 2:
             board_input = depth2
-            print("---------------------------")
-            print("solution should be at depth 2.")
-            print()
+            print("BOARD - DEPTH 2")
         elif val == 3:
             board_input = depth4
-            print("---------------------------")
-            print("solution should be at depth 4.")
-            print()
+            print("BOARD - DEPTH 4")
         elif val == 4:
             board_input = depth8
-            print("---------------------------")
-            print("solution should be at depth 8.")
-            print()
+            print("BOARD - DEPTH 8")
         elif val == 5:
             board_input = depth12
-            print("---------------------------")
-            print("solution should be at depth 12.")
-            print()
+            print("BOARD - DEPTH 12")
         elif val == 6:
             board_input = depth16
-            print("---------------------------")
-            print("solution should be at depth 16.")
-            print()
+            print("BOARD - DEPTH 16")
         elif val == 7:
             board_input = depth20
-            print("---------------------------")
-            print("solution should be at depth 20.")
-            print()
+            print("BOARD - DEPTH 20")
         elif val == 8:
             board_input = depth24
-            print("---------------------------")
-            print("solution should be at depth 24.")
-            print()
+            print("BOARD - DEPTH 24")
         else:
+            print("CUSTOM BOARD")
             board_input = []
             digits_used = []
             print("Enter digits 0-9: ")
@@ -84,15 +74,22 @@ def main():
                     digits_used.append(x)
                 board_input.append(row)  
                 
+        print("---------------")
+        print()
+
         # 1 = uniform cost search
         # 2 = a* misplaced tile
         # 3 = a* manhattan distance
+        print("---------------")
         print("Search Types:")
+        print("---------------")
         print("(1) Uniform Cost Search")
         print("(2) A* Misplaced Tile")
         print("(3) A* Manhattan Distance")
         print("-------------------")
         search_type = int(input("Enter (1-3): "))
+        print("-------------------")
+        print()
 
         general_search(board_input, goal_board, search_type)
 
@@ -114,6 +111,7 @@ def general_search(board, goal_state, search_type):
 
     visited = { curr.boardToTuple() : 0 } # keep track of repeating states
 
+    time = 0
 
     while(True):
         # check if queue is empty
@@ -123,7 +121,7 @@ def general_search(board, goal_state, search_type):
         
         # else, pop top node from queue (node with lowest cost)
         curr = heapq.heappop(queue)
-
+        time += 1
         # if top node (curr state) equals goal state
         if curr.board == goal_state:
             print("Goal Board State:") # print goal board state for user to see
@@ -131,8 +129,9 @@ def general_search(board, goal_state, search_type):
                 print(row)
             print()
 
-            print("solution found: depth ", curr.cost)
+            print("solution found: depth", curr.cost, ", time:", time)
             print("---------------------------")
+            print()
             return
 
         # else, expand the curr node
